@@ -2,6 +2,7 @@ package com.csme.assist.loan.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,10 +13,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Loan {
+public class Loan extends Base {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name="LOAN_REF")
     private String loanReference;
     @Column(name="AMT")
@@ -50,5 +51,12 @@ public class Loan {
     private String issuedBy;
     @Column(name="APPROVED_BY")
     private String approvedBy;
+    @Column (name = "STATUS")
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
+    @Column(name="APPROVER_COMMENTS")
+    private String approverComments;
+    @Column(name = "DELETE_FLAG")
+    private boolean deleteFlag;
 
 }

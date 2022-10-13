@@ -27,7 +27,9 @@ public interface  LoanService {
 
     LoanDTO approveLoan(int id,LoanDTO loanDTO);
 
-    LoanDTO rejectLoan(int id,LoanDTO loanDTO);
+    LoanDTO approveLoan(String laonId, LoanDTO loanDTO);
+
+    LoanDTO rejectLoan(int id, LoanDTO loanDTO);
 
     List<LoanDTO> getLoansByApproverIdAndStatus(String id, StatusEnum status);
 }

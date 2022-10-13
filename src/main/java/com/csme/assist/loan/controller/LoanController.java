@@ -1,6 +1,7 @@
 package com.csme.assist.loan.controller;
 
 import com.csme.assist.loan.entity.TransactionStatusEnum;
+import com.csme.assist.loan.model.EMIDeatailInfo;
 import com.csme.assist.loan.model.LoanDTO;
 import com.csme.assist.loan.service.LoanService;
 import com.csme.assist.loan.service.LoanServiceImpl;
@@ -14,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Loan")
+//@RequestMapping("/loan")
 @Slf4j
 public class LoanController {
 
@@ -46,7 +47,7 @@ public class LoanController {
 
 
     @GetMapping (path = "/loansByResourceId/{id}")
-    public ResponseEntity<List<LoanDTO>> getLeavesByResourceId( @PathVariable (name = "id") String id)
+    public ResponseEntity<List<LoanDTO>> getLoansByResourceId( @PathVariable (name = "id") String id)
     {
         return new ResponseEntity<>(loanServiceImpl.getLoansByApproverId(id), HttpStatus.OK);
 
@@ -61,22 +62,28 @@ public class LoanController {
     }
 
 
-
-    @PostMapping(path = "/loans")
-    public ResponseEntity<LoanDTO> addLeave(@Valid @RequestBody LoanDTO LoanDTO) throws Exception {
+    @PostMapping(path = "/createloan")
+    public ResponseEntity<LoanDTO> addLoan(@Valid @RequestBody LoanDTO LoanDTO) throws Exception {
+        System.out.println("Inside loans endpoint");
         return new ResponseEntity<>(loanServiceImpl.addLoan(LoanDTO),HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(path = "/getEMIDetails")
+    public ResponseEntity<EMIDeatailInfo> getEMIDetails(@RequestBody EMIDeatailInfo eMIDeatailInfo) throws Exception {
+        System.out.println("Inside EMIDeatailInfo");
+        return new ResponseEntity<>(loanServiceImpl.getEmiDetails(eMIDeatailInfo),HttpStatus.ACCEPTED);
     }
 
 
     @PutMapping(path = "/loans/{id}")
-    public ResponseEntity<LoanDTO> updateLeave(@Valid @RequestBody LoanDTO loanDTO, @PathVariable (name = "id") int id)
+    public ResponseEntity<LoanDTO> updateLoan(@Valid @RequestBody LoanDTO loanDTO, @PathVariable (name = "id") int id)
     {
         return new ResponseEntity<>(loanServiceImpl.updateLoan(id,loanDTO),HttpStatus.ACCEPTED);
     }
 
 
     @PutMapping(path = "/approveLoan/{id}")
-    public ResponseEntity<LoanDTO> approveLoan(@Valid @RequestBody LoanDTO loanDTO,@PathVariable (name = "id") int id)
+    public ResponseEntity<LoanDTO> approveLoan(@Valid @RequestBody LoanDTO loanDTO,@PathVariable (name = "id") String id)
     {
         LoanDTO loanDTOs = loanServiceImpl.approveLoan(id,loanDTO);
         return new ResponseEntity<>(loanDTOs, HttpStatus.OK);

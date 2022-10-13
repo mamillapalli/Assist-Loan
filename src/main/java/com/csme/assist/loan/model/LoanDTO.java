@@ -1,10 +1,14 @@
 package com.csme.assist.loan.model;
 
+import com.csme.assist.loan.entity.StatusEnum;
+import com.csme.assist.loan.entity.TransactionStatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -33,6 +37,9 @@ public class LoanDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd" ,timezone = "Asia/Dubai")
     private Date emiEndDate;
     private String issuedBy;
+    private StatusEnum status;
+    private TransactionStatusEnum transactionStatus;
     private String approvedBy;
-
+    private String approverComments;
+    private boolean deleteFlag;
 }
